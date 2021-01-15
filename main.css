@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid gray;
+  width: 600px;
+  height: 600px;
+  flex-wrap: wrap;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.1px solid gray;
+  font-size: 25px;
+}
