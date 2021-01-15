@@ -13,6 +13,8 @@ const cells = []
 let currentPlayer = 1
 const playerOneMarkers = []
 const playerTwoMarkers = []
+let playerOnePoints = 0
+let playerTwoPoints = 0
 let currentTurns = 0
 let playerOneWin = false
 let playerTwoWin = false
@@ -62,6 +64,8 @@ for (let index = 0; index < width ** 2; index++) {
       checkForWin()
       if (playerOneWin === true) {
         result.innerHTML = 'Player 1 wins!'
+        playerOnePoints += 1
+        playerWins()
       }
       currentTurns += 1
       if (currentTurns === 9 && playerOneWin === false) {
@@ -76,6 +80,8 @@ for (let index = 0; index < width ** 2; index++) {
       checkForWin()
       if (playerTwoWin === true) {
         result.innerHTML = 'Player 2 wins!'
+        playerTwoPoints += 1
+        playerWins()
       }
       currentTurns += 1
       if (currentTurns === 9 && playerTwoWin === false) {
@@ -97,8 +103,14 @@ for (let index = 0; index < width ** 2; index++) {
     cell.innerHTML = ''
     playerTurn.innerHTML = 'Player 1 GO!'
     result.innerHTML = ''
+    board.removeAttribute('id', 'disabled')
+    const popUp = document.querySelector('.pop-up')
+    popUp.remove()
     playerOneMarkers.length = 0
     playerTwoMarkers.length = 0
+    playerOneWin = false
+    playerTwoWin = false
+    currentTurns = 0
     currentPlayer = 1
   })
 
@@ -121,5 +133,17 @@ function checkForWin() {
   }
 }
 
-
+function playerWins() {
+  board.setAttribute('id', 'disabled')
+  const popUp = document.createElement('div')
+  popUp.classList.add('pop-up')
+  document.body.appendChild(popUp)
+  if (playerOneWin === true) {
+    popUp.setAttribute('id', 'player1win')
+    popUp.innerHTML = 'Player 1 wins!'
+  } else {
+    popUp.setAttribute('id', 'player2win')
+    popUp.innerHTML = 'Player 2 wins!'
+  }
+}
 

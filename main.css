@@ -28,3 +28,22 @@ body {
   border: 0.1px solid gray;
   font-size: 25px;
 }
+
+.pop-up {
+  border: 1px solid black;
+  width: 300px;
+  height: 100px;
+  position: absolute;
+}
+
+#player1win {
+  background: red
+}
+
+#player2win {
+  background: blue
+}
+
+#disabled {
+  filter: blur(5px)
+}
