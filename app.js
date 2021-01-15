@@ -64,7 +64,7 @@ for (let index = 0; index < width ** 2; index++) {
         result.innerHTML = 'Player 1 wins!'
       }
       currentTurns += 1
-      if (currentTurns === 9) {
+      if (currentTurns === 9 && playerOneWin === false) {
         result.innerHTML = "It's a tie!"
       }
       currentPlayer += 1
@@ -78,7 +78,7 @@ for (let index = 0; index < width ** 2; index++) {
         result.innerHTML = 'Player 2 wins!'
       }
       currentTurns += 1
-      if (currentTurns === 9) {
+      if (currentTurns === 9 && playerTwoWin === false) {
         result.innerHTML = "It's a tie!"
       }
       currentPlayer -= 1
@@ -96,6 +96,7 @@ for (let index = 0; index < width ** 2; index++) {
   reset.addEventListener('click', () => {
     cell.innerHTML = ''
     playerTurn.innerHTML = 'Player 1 GO!'
+    result.innerHTML = ''
     playerOneMarkers.length = 0
     playerTwoMarkers.length = 0
     currentPlayer = 1
