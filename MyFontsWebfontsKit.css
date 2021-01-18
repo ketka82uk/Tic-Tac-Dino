@@ -1,0 +1,27 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3998425, 2021-01-16T15:38:35-0500
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: StoneHinge by Typadelic
+ * URL: https://www.myfonts.com/fonts/typadelic/stone-hinge/stone-hinge/
+ * Copyright: Copyright (c) TYPADELIC FONTS, 2003. All rights reserved.
+ * 
+ * 
+ * 
+ * © 2021 MyFonts Inc
+*/
+
+
+
+  
+@font-face {
+  font-family: 'StoneHinge';
+  src: url('fonts/StoneHinge/font.woff2') format('woff2'), url('fonts/StoneHinge/font.woff') format('woff');
+}
+
