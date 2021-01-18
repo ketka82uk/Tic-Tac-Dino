@@ -1,3 +1,7 @@
+/* border: solid 1px #bebebc;
+*/
+
+
 * {
   box-sizing: border-box;
 }
@@ -8,42 +12,80 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0
+  margin: 0;
+  /*background: url('graphics/cartoon-mountain-background.jpg');
+  */
+  background-size: cover;
 }
 
-.board {
+.main-board {
   display: flex;
   flex-direction: row;
-  border: 1px solid gray;
   width: 600px;
   height: 600px;
   flex-wrap: wrap;
 }
 
-.cell {
+.small-board {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  border: 0.1px solid gray;
-  font-size: 25px;
+  align-content: center;
 }
 
-.pop-up {
-  border: 1px solid black;
-  width: 300px;
-  height: 100px;
-  position: absolute;
+.active {
+  background: lightblue;
 }
 
-#player1win {
-  background: red
+.disabled {
+  filter: blur(1px);
 }
 
-#player2win {
-  background: blue
+.carnivore {
+  background: pink;
+  filter: blur(1px);
 }
 
-#disabled {
-  filter: blur(5px)
+.herbivore {
+  background: lightgreen;
+  filter: blur(1px);
 }
+
+.cell {
+  border: solid 1px black;
+  box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  margin: 2px;
+  background: white;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+}
+
+.leaf {
+  background: url('graphics/Dinosaurs/leaf.png');
+  background-size: cover;
+}
+
+.bone {
+  background: url('graphics/Dinosaurs/bone.png');
+  background-size: cover;
+}
+
+#A, #B, #D, #E {
+  border-right: 5px solid rgb(90, 82, 74);;
+  border-bottom: 5px solid rgb(90, 82, 74);;
+}
+
+#G, #H {
+  border-right: 5px solid rgb(90, 82, 74);;
+  
+}
+
+#C, #F {
+  border-bottom: 5px solid rgb(90, 82, 74);;
+}
+
+
