@@ -52,6 +52,11 @@ body {
   filter: blur(1px);
 }
 
+.tie {
+  background: gray;
+  filter: blur(1px);
+}
+
 .cell {
   border: solid 1px black;
   box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);

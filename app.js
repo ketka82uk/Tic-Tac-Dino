@@ -4,15 +4,22 @@ const mainBoard = document.querySelector('.main-board')
 // ? Sets width of grid/boards/cells
 const width = 3
 const cells = []
+//const boardA = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8']
 
 // ? Used to construct ids for the cells
-const smallBoards = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+const smallBoardIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 const cellIds = []
 
 // ? Sets up player variables
 let currentPlayer = 'carnivore'
 const boneMarkers = []
 const leafMarkers = []
+const carnivoreWins = []
+const herbivoreWins = []
+
+let carnivoreWinsRound = false
+let herbivoreWinsRound = false
+
 let carnivoreWinA = false
 let herbivoreWinA = false
 let carnivoreWinB = false
@@ -32,6 +39,8 @@ let herbivoreWinH = false
 let carnivoreWinI = false
 let herbivoreWinI = false
 
+
+// ? Sets up win conditions
 const boards = {
   A: {
     winConditions: [
@@ -162,6 +171,17 @@ const boards = {
 
 }
 
+const roundWinConditions = [
+  ['A', 'B', 'C'],
+  ['D', 'E', 'F'],
+  ['G', 'H', 'I'],
+  ['A', 'D', 'G'],
+  ['B', 'E', 'H'],
+  ['C', 'F', 'I'],
+  ['A', 'E', 'I'],
+  ['C', 'E', 'G']
+]
+
 
 
 
@@ -173,7 +193,7 @@ for (let index = 0; index < width ** 2; index++) {
   mainBoard.appendChild(smallBoard)
   smallBoard.style.width = `${100 / width}%`
   smallBoard.style.height = `${100 / width}%`
-  smallBoard.setAttribute('id', `${smallBoards[index]}`)
+  smallBoard.setAttribute('id', `${smallBoardIds[index]}`)
   //console.log(smallBoards[index])
   //console.log(smallBoard.id)
 
@@ -188,6 +208,7 @@ for (let index = 0; index < width ** 2; index++) {
     cell.setAttribute('id', `${smallBoard.id}${index}`)
     //console.log(cell.id)
     cellIds.push(cell.id)
+
 
     // ! Click event listener for placing markers - CARNIVORE
 
@@ -216,12 +237,19 @@ for (let index = 0; index < width ** 2; index++) {
 
 
         // ? CHECK FOR TIE
+        
+        checkForTie(smallBoard.id)
+
+        
         // ? CHECK FOR OVERALL WIN
+
+        checkRoundWin()
+
         // ? CHECK FOR OVERALL TIE
 
-        currentPlayer = 'herbivore' // changes player to herbivore
+        checkRoundTie()
 
-        const smallBoards = document.querySelectorAll('.small-board')
+        currentPlayer = 'herbivore' // changes player to herbivore
 
         smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
         smallBoards.forEach(smallBoard => smallBoard.classList.add('disabled')) // disables all boards
@@ -340,13 +368,22 @@ for (let index = 0; index < width ** 2; index++) {
 
 
         // ? CHECK FOR TIE
+
+        checkForTie(smallBoard.id)
+
+        
         // ? CHECK FOR OVERALL WIN
+
+        checkRoundWin()
+
         // ? CHECK FOR OVERALL TIE
+
+        checkRoundTie()
 
         currentPlayer = 'carnivore' //changes player to carnivore
 
 
-        const smallBoards = document.querySelectorAll('.small-board')
+        //const smallBoards = document.querySelectorAll('.small-board')
 
         smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
 
@@ -439,12 +476,7 @@ for (let index = 0; index < width ** 2; index++) {
           }
         }
 
-
       }
-
-      //console.log(boneMarkers)
-      //console.log(leafMarkers)
-
 
     })
 
@@ -453,6 +485,54 @@ for (let index = 0; index < width ** 2; index++) {
 
 
 }
+
+const smallBoards = Array.from(document.querySelectorAll('.small-board')) 
+
+// ! Function to check for tie
+
+function checkForTie(activeBoard) {
+  //console.log(activeBoard)
+  //console.log(boards[activeBoard].won)
+  let currentBoard = ''
+  for (let i = 0; i < smallBoards.length; i++) {
+    if (activeBoard === smallBoards[i].id) {
+      currentBoard = smallBoards[i]
+    }
+  }
+  const children = Array.from(currentBoard.children)
+  let emptyCells = 0
+  for (let i = 0; i < children.length; i++) {
+    if (!children[i].classList.contains('leaf') && !children[i].classList.contains('bone')) {
+      emptyCells++
+    }
+  }
+  if (emptyCells === 0 && !boards[activeBoard].won) {
+    console.log('board is a tie!')
+    currentBoard.classList.add('tie')
+    boards[activeBoard].drawn = true
+  }
+  console.log(boards[activeBoard].drawn)  
+}
+
+
+// ! Function to check for overall tie in round
+
+function checkRoundTie() {
+
+  // Will return true if all boards have class carnivore, herbivore or tie and no win condition has been met.
+  let activeBoards = 0
+  for (let i = 0; i < smallBoards.length; i++) {
+    if (!smallBoards[i].classList.contains('carnivore') && !smallBoards[i].classList.contains('herbivore') && !smallBoards[i].classList.contains('tie')) {
+      activeBoards++
+    }
+  }
+  if (activeBoards === 0 && !carnivoreWinsRound && !herbivoreWinsRound) {
+    console.log('Game is a tie!')
+  }
+
+}
+
+// ! Functions to check for win in each small board
 
 function checkForWinA() {
   for (let i = 0; i < boards.A.winConditions.length; i++) {
@@ -463,6 +543,7 @@ function checkForWinA() {
       boardWon.classList.add('carnivore')
       console.log('carnivore wins A!')
       boards.A.won = true
+      carnivoreWins.push('A')
       return carnivoreWinA = true
     // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winA[0]) && leafMarkers.includes(winA[1]) && leafMarkers.includes(winA[2])) {
@@ -470,6 +551,7 @@ function checkForWinA() {
       boardWon.classList.add('herbivore')
       console.log('herbivore wins A!')
       boards.A.won = true
+      herbivoreWins.push('A')
       return herbivoreWinA = true
     }
   }
@@ -486,12 +568,14 @@ function checkForWinB() {
       boardWon.classList.add('carnivore')
       console.log('carnivore wins B!')
       boards.B.won = true
+      carnivoreWins.push('B')
       return carnivoreWinB = true
     // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winB[0]) && leafMarkers.includes(winB[1]) && leafMarkers.includes(winB[2])) {
       const boardWon = document.getElementById('B')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins B!')
+      herbivoreWins.push('B')
       boards.B.won = true
       return herbivoreWinB = true
     }
@@ -508,6 +592,7 @@ function checkForWinC() {
       const boardWon = document.getElementById('C')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins C!')
+      carnivoreWins.push('C')
       boards.C.won = true
       return carnivoreWinC = true
     // IF HERBIVORE WINS
@@ -515,6 +600,7 @@ function checkForWinC() {
       const boardWon = document.getElementById('C')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins C!')
+      herbivoreWins.push('C')
       boards.C.won = true
       return herbivoreWinC = true
     }
@@ -532,12 +618,14 @@ function checkForWinD() {
       boardWon.classList.add('carnivore')
       console.log('carnivore wins D!')
       boards.D.won = true
+      carnivoreWins.push('D')
       return carnivoreWinD = true
     // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winD[0]) && leafMarkers.includes(winD[1]) && leafMarkers.includes(winD[2])) {
       const boardWon = document.getElementById('D')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins D!')
+      herbivoreWins.push('D')
       boards.D.won = true
       return herbivoreWinD = true
     }
@@ -554,6 +642,7 @@ function checkForWinE() {
       const boardWon = document.getElementById('E')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins E!')
+      carnivoreWins.push('E')
       boards.E.won = true
       return carnivoreWinE = true
     // IF HERBIVORE WINS
@@ -561,6 +650,7 @@ function checkForWinE() {
       const boardWon = document.getElementById('E')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins E!')
+      herbivoreWins.push('E')
       boards.E.won = true
       return herbivoreWinE = true
     }
@@ -577,6 +667,7 @@ function checkForWinF() {
       const boardWon = document.getElementById('F')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins F!')
+      carnivoreWins.push('F')
       boards.F.won = true
       return carnivoreWinF = true
     // IF HERBIVORE WINS
@@ -584,6 +675,7 @@ function checkForWinF() {
       const boardWon = document.getElementById('F')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins F!')
+      herbivoreWins.push('F')
       boards.F.won = true
       return herbivoreWinF = true
     }
@@ -600,6 +692,7 @@ function checkForWinG() {
       const boardWon = document.getElementById('G')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins G!')
+      carnivoreWins.push('G')
       boards.G.won = true
       return carnivoreWinG = true
     // IF HERBIVORE WINS
@@ -607,6 +700,7 @@ function checkForWinG() {
       const boardWon = document.getElementById('G')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins G!')
+      herbivoreWins.push('G')
       boards.G.won = true
       return herbivoreWinG = true
     }
@@ -623,6 +717,7 @@ function checkForWinH() {
       const boardWon = document.getElementById('H')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins H!')
+      carnivoreWins.push('H')
       boards.H.won = true
       return carnivoreWinH = true
     // IF HERBIVORE WINS
@@ -630,6 +725,7 @@ function checkForWinH() {
       const boardWon = document.getElementById('H')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins H!')
+      herbivoreWins.push('H')
       boards.H.won = true
       return herbivoreWinH = true
     }
@@ -646,6 +742,7 @@ function checkForWinI() {
       const boardWon = document.getElementById('I')
       boardWon.classList.add('carnivore')
       console.log('carnivore wins I!')
+      carnivoreWins.push('I')
       boards.I.won = true
       return carnivoreWinI = true
     // IF HERBIVORE WINS
@@ -653,6 +750,7 @@ function checkForWinI() {
       const boardWon = document.getElementById('I')
       boardWon.classList.add('herbivore')
       console.log('herbivore wins I!')
+      herbivoreWins.push('I')
       boards.I.won = true
       return herbivoreWinI = true
     }
@@ -660,7 +758,20 @@ function checkForWinI() {
 
 }
 
+// ! Function to check for overall win in round
 
+function checkRoundWin() {
+  for (let i = 0; i < roundWinConditions.length; i++) {
+    const roundWin = roundWinConditions[i]
+    if (carnivoreWins.includes(roundWin[0]) && carnivoreWins.includes(roundWin[1]) && carnivoreWins.includes(roundWin[2])) {
+      console.log('carnivore wins the game!')
+      return carnivoreWinsRound = true
+    } else if (herbivoreWins.includes(roundWin[0]) && herbivoreWins.includes(roundWin[1]) && herbivoreWins.includes(roundWin[2])) {
+      console.log('herbivore wins the game!')
+      return herbivoreWinsRound = true
+    }
+  }
+}
 
 
 
@@ -679,23 +790,32 @@ Goes after click
 
 //console.log(event.target.id)
 //console.log(index)
-
-
 //console.log(leafMarkers)
-
 //console.log(boneMarkers)
 //console.log(event.target.id)
 //console.log(index)
 //console.log(smallBoard.id)
-
 //console.log(cellIds)
 
 /*
 
-To do:
- - Change background color of active small-board depending on player
- - Add eggs points
- - Activate all open boards if an index referrs to a drawn/won board
+MVP (Tuesday):
+- Set up tie conditions
+- Set up overall win conditions
+- Set up overall tie conditions
+- Add pop-ups
+- Add reset (start new game) button
+
+Stretch goals (Wednesday):
+- Add eggs points
+- Add choose dino option
+- Add sounds
+
+Extra stretch goals (Thursday):
+- AI
+- Add name
+- Change background color of active small-board depending on player
+ 
 
  */
 
