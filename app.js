@@ -883,10 +883,12 @@ MVP (Tuesday):
 - Set up tie conditions - DONE
 - Set up overall win conditions - DONE
 - Set up overall tie conditions - DONE
-- Add pop-ups
+- Add pop-ups -DONE
 - Add reset (start new game) button
 
 Stretch goals (Wednesday):
+- Add reset button
+- Deactivate all boards when round won
 - Add eggs points
 - Add choose dino option
 - Add sounds
