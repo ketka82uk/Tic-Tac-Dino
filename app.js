@@ -1,6 +1,7 @@
 const mainBoard = document.querySelector('.main-board')
-const playerTurn = document.querySelector('.player-turn')
-
+const reset = document.querySelector('button')
+//const centerColumn = document.querySelector('.center-column')
+const main = document.querySelector('main')
 
 // ? Sets width of grid/boards/cells
 const width = 3
@@ -20,6 +21,11 @@ const herbivoreWins = []
 
 let carnivoreWinsRound = false
 let herbivoreWinsRound = false
+let roundIsTied = false
+
+let round = 1
+let carnivorePoints = 0
+let herbivorePoints = 0
 
 let carnivoreWinA = false
 let herbivoreWinA = false
@@ -39,6 +45,8 @@ let carnivoreWinH = false
 let herbivoreWinH = false
 let carnivoreWinI = false
 let herbivoreWinI = false
+
+
 
 
 // ? Sets up win conditions
@@ -184,6 +192,42 @@ const roundWinConditions = [
 ]
 
 
+const startPage = document.createElement('div')
+startPage.classList.add('start-page')
+main.appendChild(startPage)
+
+setTimeout(() => {
+  const titleText = document.createElement('div')
+  titleText.classList.add('title-text')
+  startPage.appendChild(titleText)
+  titleText.innerHTML = 'Tic-Tac-'
+  const titleText2 = document.createElement('div')
+  titleText2.classList.add('dino-text')
+  startPage.appendChild(titleText2)
+  setTimeout(() => {
+    titleText2.innerHTML = 'DINO!'
+    const startButton = document.createElement('button')
+    startButton.classList.add('start-button')
+    startPage.appendChild(startButton)
+    startButton.innerHTML = 'Start Game!'
+    startButton.addEventListener('click', () => {
+      startButton.remove()
+      startPage.remove()
+    })
+  }, 1000)
+}, 1000)
+
+const bonePicture = document.querySelector('.bone-picture')
+const leafPicture = document.querySelector('.leaf-picture')
+const herbivoreGo = document.createElement('img')
+herbivoreGo.src = 'graphics/Dinosaurs/leaf.png'
+herbivoreGo.width = '100'
+const carnivoreGo = document.createElement('img')
+carnivoreGo.src = 'graphics/Dinosaurs/bone.png'
+carnivoreGo.width = '150'
+bonePicture.appendChild(carnivoreGo)
+carnivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
 
 
 // ! A for loop that sets up the main board as a 3*3 grid
@@ -210,17 +254,38 @@ for (let index = 0; index < width ** 2; index++) {
     //console.log(cell.id)
     cellIds.push(cell.id)
 
+    
+
 
     // ! Click event listener for placing markers - CARNIVORE
 
     cell.addEventListener('click', () => {
+
+    
+      if (currentPlayer === 'herbivore') {
+        herbivoreGo.remove()
+        bonePicture.appendChild(carnivoreGo)
+        carnivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+      } else if (currentPlayer === 'carnivore') {
+        carnivoreGo.remove()
+        leafPicture.appendChild(herbivoreGo)
+        herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+      }
+
+    
+      
+      // if (carnivoreWinsRound === true || herbivoreWinsRound === true || roundIsTied === true) {
+      //   smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
+      //   smallBoards.forEach(smallBoard => smallBoard.classList.add('disabled')) // disables all boards
+      // } // Needs to be somewhere else
 
       if (currentPlayer === 'carnivore'
         && !cell.classList.contains('bone')
         && !cell.classList.contains('leaf')
         && smallBoard.classList.contains('active')
         && !smallBoard.classList.contains('carnivore')
-        && !smallBoard.classList.contains('herbivore')) { //carnivore goes first
+        && !smallBoard.classList.contains('herbivore')
+        && !smallBoard.classList.contains('tie')) { //carnivore goes first
         cell.classList.add('bone') // adds class bone to cell
         boneMarkers.push(cell.id) // pushes cell ID to boneMarkers array
 
@@ -238,10 +303,9 @@ for (let index = 0; index < width ** 2; index++) {
 
 
         // ? CHECK FOR TIE
-        
+
         checkForTie(smallBoard.id)
 
-        
         // ? CHECK FOR OVERALL WIN
 
         checkRoundWin()
@@ -252,14 +316,15 @@ for (let index = 0; index < width ** 2; index++) {
         // ? CHECK FOR OVERALL TIE
 
         checkRoundTie()
+        if (roundIsTied === true) {
+          playerWins()
+        }
 
         currentPlayer = 'herbivore' // changes player to herbivore
 
-        playerTurn.innerHTML = 'Herbivore GO!'
-
+    
         smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
         smallBoards.forEach(smallBoard => smallBoard.classList.add('disabled')) // disables all boards
-
 
         // ? If statement that selects next active board - CARNIVORE
 
@@ -356,7 +421,8 @@ for (let index = 0; index < width ** 2; index++) {
         && !cell.classList.contains('leaf')
         && smallBoard.classList.contains('active')
         && !smallBoard.classList.contains('carnivore')
-        && !smallBoard.classList.contains('herbivore')) {
+        && !smallBoard.classList.contains('herbivore')
+        && !smallBoard.classList.contains('tie')) {
         cell.classList.add('leaf')
         leafMarkers.push(cell.id)
 
@@ -377,7 +443,6 @@ for (let index = 0; index < width ** 2; index++) {
 
         checkForTie(smallBoard.id)
 
-        
         // ? CHECK FOR OVERALL WIN
 
         checkRoundWin()
@@ -388,10 +453,11 @@ for (let index = 0; index < width ** 2; index++) {
         // ? CHECK FOR OVERALL TIE
 
         checkRoundTie()
+        if (roundIsTied === true) {
+          playerWins()
+        }
 
         currentPlayer = 'carnivore' //changes player to carnivore
-
-        playerTurn.innerHTML = 'Carnivore GO!'
 
         //const smallBoards = document.querySelectorAll('.small-board')
 
@@ -490,13 +556,22 @@ for (let index = 0; index < width ** 2; index++) {
 
     })
 
+
+
   }
 
 
 
 }
 
+
 const smallBoards = Array.from(document.querySelectorAll('.small-board'))
+const popUp = document.querySelector('.pop-up')
+const cells2 = Array.from(document.querySelectorAll('.cell'))
+
+
+
+
 
 // ! Function to check for tie
 
@@ -521,7 +596,7 @@ function checkForTie(activeBoard) {
     currentBoard.classList.add('tie')
     boards[activeBoard].drawn = true
   }
-  console.log(boards[activeBoard].drawn)  
+  //console.log(boards[activeBoard].drawn)  
 }
 
 
@@ -538,6 +613,7 @@ function checkRoundTie() {
   }
   if (activeBoards === 0 && !carnivoreWinsRound && !herbivoreWinsRound) {
     console.log('Game is a tie!')
+    return roundIsTied = true
   }
 
 }
@@ -556,9 +632,10 @@ function checkForWinA() {
       carnivoreWins.push('A')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       return carnivoreWinA = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winA[0]) && leafMarkers.includes(winA[1]) && leafMarkers.includes(winA[2])) {
       const boardWon = document.getElementById('A')
       boardWon.classList.add('herbivore')
@@ -567,16 +644,17 @@ function checkForWinA() {
       herbivoreWins.push('A')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       return herbivoreWinA = true
-      
-    } 
+
+    }
   }
 }
 
 function checkForWinB() {
   for (let i = 0; i < boards.B.winConditions.length; i++) {
-    
+
     const winB = boards.B.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winB[0]) && boneMarkers.includes(winB[1]) && boneMarkers.includes(winB[2])) {
@@ -587,9 +665,10 @@ function checkForWinB() {
       carnivoreWins.push('B')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       return carnivoreWinB = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winB[0]) && leafMarkers.includes(winB[1]) && leafMarkers.includes(winB[2])) {
       const boardWon = document.getElementById('B')
       boardWon.classList.add('herbivore')
@@ -597,6 +676,7 @@ function checkForWinB() {
       herbivoreWins.push('B')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.B.won = true
       return herbivoreWinB = true
@@ -607,7 +687,7 @@ function checkForWinB() {
 
 function checkForWinC() {
   for (let i = 0; i < boards.C.winConditions.length; i++) {
-    
+
     const winC = boards.C.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winC[0]) && boneMarkers.includes(winC[1]) && boneMarkers.includes(winC[2])) {
@@ -617,10 +697,11 @@ function checkForWinC() {
       carnivoreWins.push('C')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.C.won = true
       return carnivoreWinC = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winC[0]) && leafMarkers.includes(winC[1]) && leafMarkers.includes(winC[2])) {
       const boardWon = document.getElementById('C')
       boardWon.classList.add('herbivore')
@@ -628,6 +709,7 @@ function checkForWinC() {
       herbivoreWins.push('C')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.C.won = true
       return herbivoreWinC = true
@@ -638,7 +720,7 @@ function checkForWinC() {
 
 function checkForWinD() {
   for (let i = 0; i < boards.D.winConditions.length; i++) {
-    
+
     const winD = boards.D.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winD[0]) && boneMarkers.includes(winD[1]) && boneMarkers.includes(winD[2])) {
@@ -649,9 +731,10 @@ function checkForWinD() {
       carnivoreWins.push('D')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       return carnivoreWinD = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winD[0]) && leafMarkers.includes(winD[1]) && leafMarkers.includes(winD[2])) {
       const boardWon = document.getElementById('D')
       boardWon.classList.add('herbivore')
@@ -659,6 +742,7 @@ function checkForWinD() {
       herbivoreWins.push('D')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.D.won = true
       return herbivoreWinD = true
@@ -669,7 +753,7 @@ function checkForWinD() {
 
 function checkForWinE() {
   for (let i = 0; i < boards.E.winConditions.length; i++) {
-    
+
     const winE = boards.E.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winE[0]) && boneMarkers.includes(winE[1]) && boneMarkers.includes(winE[2])) {
@@ -679,10 +763,11 @@ function checkForWinE() {
       carnivoreWins.push('E')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.E.won = true
       return carnivoreWinE = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winE[0]) && leafMarkers.includes(winE[1]) && leafMarkers.includes(winE[2])) {
       const boardWon = document.getElementById('E')
       boardWon.classList.add('herbivore')
@@ -690,6 +775,7 @@ function checkForWinE() {
       herbivoreWins.push('E')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.E.won = true
       return herbivoreWinE = true
@@ -700,7 +786,7 @@ function checkForWinE() {
 
 function checkForWinF() {
   for (let i = 0; i < boards.F.winConditions.length; i++) {
-   
+
     const winF = boards.F.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winF[0]) && boneMarkers.includes(winF[1]) && boneMarkers.includes(winF[2])) {
@@ -710,10 +796,11 @@ function checkForWinF() {
       carnivoreWins.push('F')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.F.won = true
       return carnivoreWinF = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winF[0]) && leafMarkers.includes(winF[1]) && leafMarkers.includes(winF[2])) {
       const boardWon = document.getElementById('F')
       boardWon.classList.add('herbivore')
@@ -721,6 +808,7 @@ function checkForWinF() {
       herbivoreWins.push('F')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.F.won = true
       return herbivoreWinF = true
@@ -731,7 +819,7 @@ function checkForWinF() {
 
 function checkForWinG() {
   for (let i = 0; i < boards.G.winConditions.length; i++) {
-    
+
     const winG = boards.G.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winG[0]) && boneMarkers.includes(winG[1]) && boneMarkers.includes(winG[2])) {
@@ -741,10 +829,11 @@ function checkForWinG() {
       carnivoreWins.push('G')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.G.won = true
       return carnivoreWinG = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winG[0]) && leafMarkers.includes(winG[1]) && leafMarkers.includes(winG[2])) {
       const boardWon = document.getElementById('G')
       boardWon.classList.add('herbivore')
@@ -752,6 +841,7 @@ function checkForWinG() {
       herbivoreWins.push('G')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.G.won = true
       return herbivoreWinG = true
@@ -762,7 +852,7 @@ function checkForWinG() {
 
 function checkForWinH() {
   for (let i = 0; i < boards.H.winConditions.length; i++) {
-   
+
     const winH = boards.H.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winH[0]) && boneMarkers.includes(winH[1]) && boneMarkers.includes(winH[2])) {
@@ -772,10 +862,11 @@ function checkForWinH() {
       carnivoreWins.push('H')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.H.won = true
       return carnivoreWinH = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winH[0]) && leafMarkers.includes(winH[1]) && leafMarkers.includes(winH[2])) {
       const boardWon = document.getElementById('H')
       boardWon.classList.add('herbivore')
@@ -783,6 +874,7 @@ function checkForWinH() {
       herbivoreWins.push('H')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.H.won = true
       return herbivoreWinH = true
@@ -793,7 +885,7 @@ function checkForWinH() {
 
 function checkForWinI() {
   for (let i = 0; i < boards.I.winConditions.length; i++) {
-    
+
     const winI = boards.I.winConditions[i]
     // IF CARNIVORE WINS:
     if (boneMarkers.includes(winI[0]) && boneMarkers.includes(winI[1]) && boneMarkers.includes(winI[2])) {
@@ -803,10 +895,11 @@ function checkForWinI() {
       carnivoreWins.push('I')
       const badge = document.createElement('div')
       badge.classList.add('bone-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.I.won = true
       return carnivoreWinI = true
-    // IF HERBIVORE WINS
+      // IF HERBIVORE WINS
     } else if (leafMarkers.includes(winI[0]) && leafMarkers.includes(winI[1]) && leafMarkers.includes(winI[2])) {
       const boardWon = document.getElementById('I')
       boardWon.classList.add('herbivore')
@@ -814,6 +907,7 @@ function checkForWinI() {
       herbivoreWins.push('I')
       const badge = document.createElement('div')
       badge.classList.add('leaf-sticker')
+      badge.classList.add('badge')
       boardWon.appendChild(badge)
       boards.I.won = true
       return herbivoreWinI = true
@@ -840,19 +934,147 @@ function checkRoundWin() {
 // ! Functions for pop-ups
 
 function playerWins() {
-  mainBoard.setAttribute('id', 'disabled')
+  //mainBoard.setAttribute('id', 'disabled') // not working
   const popUp = document.createElement('div')
   popUp.classList.add('pop-up')
   document.body.appendChild(popUp)
+  popUp.setAttribute('id', 'pop-up')
   if (carnivoreWinsRound === true) {
-    popUp.setAttribute('id', 'carnivore-win')
+    round++
+    carnivorePoints++
     popUp.innerHTML = 'Carnivore wins!'
-  } else {
-    popUp.setAttribute('id', 'herbivore-win')
+    const egg = document.createElement('img')
+    egg.src = 'graphics/Dinosaurs/Egg1.png'
+    egg.width = '100'
+    popUp.appendChild(egg)
+    const playAgain = document.createElement('button')
+    playAgain.classList.add('button')
+    popUp.appendChild(playAgain)
+    playAgain.innerHTML = `Play round ${round}`
+    addEgg()
+  } else if (herbivoreWinsRound === true) {
+    round++
+    herbivorePoints++
     popUp.innerHTML = 'Herbivore wins!'
+    const egg = document.createElement('img')
+    egg.src = 'graphics/Dinosaurs/Egg1.png'
+    egg.width = '100'
+    popUp.appendChild(egg)
+    const playAgain = document.createElement('button')
+    playAgain.classList.add('button')
+    popUp.appendChild(playAgain)
+    playAgain.innerHTML = `Play round ${round}`
+    addEgg()
+  } else if (roundIsTied === true) {
+    popUp.innerHTML = "It's a tie!"
+    const playAgain = document.createElement('button')
+    playAgain.classList.add('button')
+    popUp.appendChild(playAgain)
+    playAgain.innerHTML = `Play round ${round}`
   }
+  console.log(round)
+  console.log(carnivorePoints)
+  console.log(herbivorePoints)
 }
 
+function addEgg() {
+  if (carnivorePoints === 1) {
+    const cEgg1 = document.getElementById('c-egg-1')
+    const egg1 = document.createElement('img')
+    egg1.src = 'graphics/Dinosaurs/Egg1.png'
+    egg1.width = '100%'
+    cEgg1.appendChild(egg1)
+  } else if (herbivorePoints === 1) {
+    const hEgg1 = document.getElementById('h-egg-1')
+    const egg1 = document.createElement('img')
+    egg1.src = 'graphics/Dinosaurs/Egg1.png'
+    egg1.width = '100%'
+    hEgg1.appendChild(egg1)
+  }
+
+}
+
+// ! Reset button
+
+reset.addEventListener('click', () => {
+  boneMarkers.length = 0
+  leafMarkers.length = 0
+  carnivoreWins.length = 0
+  herbivoreWins.length = 0
+
+  boards.A.won = false
+  boards.B.won = false
+  boards.C.won = false
+  boards.D.won = false
+  boards.E.won = false
+  boards.F.won = false
+  boards.G.won = false
+  boards.H.won = false
+  boards.I.won = false
+  boards.A.drawn = false
+  boards.B.drawn = false
+  boards.C.drawn = false
+  boards.D.drawn = false
+  boards.E.drawn = false
+  boards.F.drawn = false
+  boards.G.drawn = false
+  boards.H.drawn = false
+  boards.I.drawn = false
+
+  carnivoreWinsRound = false
+  herbivoreWinsRound = false
+  roundIsTied = false
+
+  currentPlayer = 'carnivore'
+
+  //console.log(boards)
+  //console.log(carnivoreWins)
+  //console.log(herbivoreWins)
+  //console.log(carnivoreWinsRound)
+  //console.log(herbivoreWinsRound)
+  //console.log(roundIsTied)
+  //console.log(currentPlayer)
+
+  let stickerRemove = document.querySelectorAll('.badge')
+  stickerRemove.forEach(sticker => {
+    sticker.classList.remove('bone-sticker')
+    sticker.classList.remove('leaf-sticker')
+  })
+
+  cells2.forEach(cell => {
+    cell.classList.remove('bone')
+    cell.classList.remove('leaf')
+  })
+
+  smallBoards.forEach(smallBoard => {
+    smallBoard.classList.remove('disabled')
+    smallBoard.classList.remove('carnivore')
+    smallBoard.classList.remove('herbivore')
+    smallBoard.classList.remove('tie')
+    smallBoard.classList.add('active')
+
+  })
+
+
+  let removePopup = document.querySelector('.pop-up')
+  removePopup.remove()
+
+
+  // smallBoards.forEach(smallBoard => {
+  //   let badge = document.querySelectorAll('.badge')
+  //   smallBoard.removeChild(badge)
+  // })
+
+  // //smallBoards.forEach(smallBoard => smallBoard.removeChild(badgeReset))
+
+
+
+})
+
+
+console.log(round)
+console.log(carnivorePoints)
+console.log(herbivorePoints)
 
 
 
@@ -895,9 +1117,9 @@ Stretch goals (Wednesday):
 
 Extra stretch goals (Thursday):
 - AI
-- Add name
+- Add dino names
 - Change background color of active small-board depending on player
- 
+
 
  */
 

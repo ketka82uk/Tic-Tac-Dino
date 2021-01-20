@@ -5,14 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic-Tac-Dino</title>
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" type="text/css" href="MyFontsWebfontsKit.css">
 </head>
 <body>
-  <div class = "player-turn">Carnivore GO!</div>
-  <div class="main-board">
-  </div>
-  <div class = "result"></div>
-  <button class="reset">Reset Board</button>
+  <main>
+    <div class="left-column">
+      <div class="bone-picture"></div>
+      <div class="carnivore-dino"></div>
+      <div class="carnivore-eggs">
+        <div id="c-egg-1">
+        </div>
+        <div id="c-egg-2"></div>
+        <div id="c-egg-3"></div>
+      </div>
+    </div>
+    <div class="center-column">
+      <div class="main-board"></div>
+      <div class="reset-button">
+        <button class="reset">Reset Board</button></div>
+    </div>
+    <div class="right-column">
+      <div class="leaf-picture"></div>
+      <div class="herbivore-dino"></div>
+      <div class="herbivore-eggs">
+        <div id="h-egg-1"></div>
+        <div id="h-egg-2"></div>
+        <div id="h-egg-3"></div>
+      </div>
+    </div>
+  </main>
   <script src="app.js"></script>
 </body>
 </html>

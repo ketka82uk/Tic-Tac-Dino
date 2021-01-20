@@ -26,8 +26,140 @@ body {
   align-items: center;
   flex-direction: column;
   margin: 0;
+  background: rgb(90, 82, 74);
+}
+
+main {
   background: url('graphics/cartoon-mountain-background.jpg');
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  margin: 20px;
+  width: 90%;
+  height: 90%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 10px 10px 4px -6px hsla(0,0%,0%,.3);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  border: 5px solid black;
+}
+
+button {
+    background: #E3CFAA;
+    border: solid 2px black;
+    box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: StoneHinge;
+    font-size: 20px;
+    color: rgb(90, 82, 74);
+  }
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.center-column {
+  flex: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.left-column, .right-column {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.bone-picture, .leaf-picture {
+  flex: 1;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.carnivore-dino, .herbivore-dino {
+  width: 100%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.carnivore-eggs, .herbivore-eggs {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.start-page {
+  position: absolute;
+  background: url('graphics/cartoon-mountain-background.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  margin: 20px;
+  width: 90%;
+  height: 90%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 10px 10px 4px -6px hsla(0,0%,0%,.3);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  border: 5px solid black;
+}
+
+.title-text, .dino-text {
+  font-size: 100px;
+  font-family: StoneHinge;
+  color: beige;
+  text-shadow: 
+  0 1px 0 #ccc, 
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
+  margin-bottom: 15px;
+}
+
+.dino-text {
+  font-size: 200px;
+  animation: heartBeat;
+  animation-duration: 5s;
 }
 
 .main-board {
@@ -59,12 +191,12 @@ body {
 }
 
 .carnivore {
-  background: pink;
+  background: #F8968B;
   filter: blur(1px);
 }
 
 .herbivore {
-  background: lightgreen;
+  background: #BEE360;
   filter: blur(1px);
 }
 
@@ -128,7 +260,7 @@ body {
 }
 
 .player-turn {
-  font-size: 50px;
+  font-size: 40px;
   font-family: StoneHinge;
   color: beige;
   text-shadow: 
@@ -144,20 +276,20 @@ body {
   0 5px 10px rgba(0,0,0,.25),
   0 10px 10px rgba(0,0,0,.2),
   0 20px 20px rgba(0,0,0,.15);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #disabled {
   filter: blur(2)
 }
 
-#carnivore-win {
-  background: pink;
+#pop-up {
+  background: #E3CFAA;
   border: solid 3px black;
   box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
   margin: 2px;
-  padding: 20px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -168,22 +300,14 @@ body {
   position: absolute;
 }
 
-#herbivore-win {
-  background: lightgreen;
-  border: solid 3px black;
-  box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-  margin: 2px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: StoneHinge;
-  font-size: 50px;
-  color: rgb(90, 82, 74);
-  position: absolute;
+#c-egg-1, #c-egg-2, #c-egg-3, #h-egg-1, #h-egg-2, #h-egg-3 {
+  border: 1px solid black;
+  height: 100%;
+  flex: 1;
+  padding: 5px;
 }
+
+
 
 /*
 
