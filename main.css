@@ -67,6 +67,27 @@ button:hover {
   transform: scale(1.1);
 }
 
+
+h1, h2 {
+  font-size: 40px;
+  font-family: StoneHinge;
+  color: beige;
+  text-shadow: 
+  0 1px 0 #ccc, 
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
+}
+
+
 .center-column {
   flex: 3;
   height: 100%;
@@ -75,6 +96,10 @@ button:hover {
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+}
+
+.hidden-board {
+  display: none;
 }
 
 .left-column, .right-column {
@@ -87,13 +112,23 @@ button:hover {
   border: 1px solid black;
 }
 
-.bone-picture, .leaf-picture {
+.bone-picture {
   flex: 1;
   width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  border: 1px solid black;
+}
+
+.leaf-picture {
+  flex: 1;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
   border: 1px solid black;
 }
 
@@ -107,6 +142,28 @@ button:hover {
   border: 1px solid black;
 }
 
+.carnivore-dino-left {
+  width: 100%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid black;
+  margin-left: 50px;
+}
+
+.herbivore-dino-right {
+  width: 100%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid black;
+  margin-left: 50px;
+}
+
 .carnivore-eggs, .herbivore-eggs {
   width: 100%;
   flex: 1;
@@ -118,9 +175,9 @@ button:hover {
 }
 
 .start-page {
-  position: absolute;
   background: url('graphics/cartoon-mountain-background.jpg');
   background-size: cover;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,6 +219,57 @@ button:hover {
   animation-duration: 5s;
 }
 
+.choose-dino-page {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  margin: 20px;
+  width: 60%;
+  height: 90%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 10px 10px 4px -6px hsla(0,0%,0%,.3);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  border: 5px solid black;
+}
+
+.choose-dino-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 50%;
+  border: solid 3px red;
+}
+
+.choose-dino-header-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 1;
+  border: solid 1px black;
+}
+
+.dino-figures {
+  display: flex;
+  flex-direction: row;
+  flex: 4;
+  border: solid 1px black;
+}
+
+.dino {
+  flex: 1;
+  display: flex;
+  border: solid 1px black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+
 .main-board {
   display: flex;
   flex-direction: row;
@@ -169,6 +277,8 @@ button:hover {
   height: 600px;
   flex-wrap: wrap;
 }
+
+
 
 .small-board {
   display: flex;
@@ -180,6 +290,10 @@ button:hover {
   padding: 5px;
   box-shadow: 5px 5px 5px -5px hsla(0,0%,0%,.3);
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.hidden-small-board {
+  display: none
 }
 
 .active {
@@ -245,6 +359,10 @@ button:hover {
   transform: scale(1.1);
 }
 
+.hidden-cell {
+  display: none
+}
+
 .leaf {
   background: url('graphics/Dinosaurs/leaf.png');
   background-size: contain;
@@ -305,6 +423,10 @@ button:hover {
   height: 100%;
   flex: 1;
   padding: 5px;
+}
+
+#trex:hover, #ptero:hover, #giganto:hover, #tricera:hover, #stego:hover, #bronto:hover {
+    transform: scale(2)
 }
 
 

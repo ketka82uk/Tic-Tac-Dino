@@ -1,7 +1,12 @@
 const mainBoard = document.querySelector('.main-board')
-const reset = document.querySelector('button')
-//const centerColumn = document.querySelector('.center-column')
+const centerColumn = document.querySelector('.hidden-board')
 const main = document.querySelector('main')
+const audio = document.querySelector('audio')
+const resetButton = document.querySelector('.reset-button')
+const bonePicture = document.querySelector('.bone-picture')
+const carnivoreDino = document.querySelector('.carnivore-dino-left')
+const herbivoreDino = document.querySelector('.herbivore-dino')
+const leafPicture = document.querySelector('.leaf-picture')
 
 // ? Sets width of grid/boards/cells
 const width = 3
@@ -14,6 +19,8 @@ const cellIds = []
 
 // ? Sets up player variables
 let currentPlayer = 'carnivore'
+let carnivore = ''
+let herbivore = ''
 const boneMarkers = []
 const leafMarkers = []
 const carnivoreWins = []
@@ -192,41 +199,288 @@ const roundWinConditions = [
 ]
 
 
+// ! Sets up start page
+
 const startPage = document.createElement('div')
 startPage.classList.add('start-page')
 main.appendChild(startPage)
 
+const titleText = document.createElement('div')
+titleText.classList.add('title-text')
+startPage.appendChild(titleText)
+titleText.innerHTML = 'Tic-Tac-'
+const titleText2 = document.createElement('div')
+titleText2.classList.add('dino-text')
+startPage.appendChild(titleText2)
+
+
 setTimeout(() => {
-  const titleText = document.createElement('div')
-  titleText.classList.add('title-text')
-  startPage.appendChild(titleText)
-  titleText.innerHTML = 'Tic-Tac-'
-  const titleText2 = document.createElement('div')
-  titleText2.classList.add('dino-text')
-  startPage.appendChild(titleText2)
-  setTimeout(() => {
-    titleText2.innerHTML = 'DINO!'
-    const startButton = document.createElement('button')
-    startButton.classList.add('start-button')
-    startPage.appendChild(startButton)
-    startButton.innerHTML = 'Start Game!'
-    startButton.addEventListener('click', () => {
-      startButton.remove()
-      startPage.remove()
-    })
-  }, 1000)
+  titleText2.innerHTML = 'DINO!'
+
 }, 1000)
 
-const bonePicture = document.querySelector('.bone-picture')
-const leafPicture = document.querySelector('.leaf-picture')
-const herbivoreGo = document.createElement('img')
+const startButton = document.createElement('button') // start button
+startButton.classList.add('start-button')
+startPage.appendChild(startButton)
+startButton.innerHTML = 'Start Game!'
+
+const herbivoreGo = document.createElement('img') // big leaf image
 herbivoreGo.src = 'graphics/Dinosaurs/leaf.png'
 herbivoreGo.width = '100'
-const carnivoreGo = document.createElement('img')
+
+const carnivoreGo = document.createElement('img') // big bone image
 carnivoreGo.src = 'graphics/Dinosaurs/bone.png'
 carnivoreGo.width = '150'
-bonePicture.appendChild(carnivoreGo)
-carnivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
+
+startButton.addEventListener('click', () => {
+  startButton.remove()
+  startPage.remove()
+
+  // ! Sets up choose dino page - CARNIVORE
+
+
+  bonePicture.appendChild(carnivoreGo)
+  carnivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
+  const chooseDinoBox = document.createElement('div')
+  chooseDinoBox.classList.add('choose-dino-box')
+  main.appendChild(chooseDinoBox)
+
+  const chooseDinoHeaderBox = document.createElement('div')
+  chooseDinoHeaderBox.classList.add('choose-dino-header-box')
+  chooseDinoBox.appendChild(chooseDinoHeaderBox)
+
+  const chooseDinoHeader = document.createElement('h1')
+  chooseDinoHeaderBox.appendChild(chooseDinoHeader)
+  chooseDinoHeader.classList.add('animate__animated', 'animate__heartBeat')
+  chooseDinoHeader.innerHTML = 'Player 1 - Choose your dino!'
+
+  const dinoFigures = document.createElement('div')
+  dinoFigures.classList.add('dino-figures')
+  chooseDinoBox.appendChild(dinoFigures)
+
+  // ? Sets up Carnivores
+
+  const dino1 = document.createElement('div')
+  dino1.classList.add('dino')
+  dinoFigures.appendChild(dino1)
+  const trex = document.createElement('img')
+  trex.src = 'graphics/Dinosaurs/trex.png'
+  trex.width = '200'
+  trex.height = '200'
+  trex.setAttribute('id', 'trex')
+  dino1.appendChild(trex)
+
+  const dino2 = document.createElement('div')
+  dino2.classList.add('dino')
+  dinoFigures.appendChild(dino2)
+  const ptero = document.createElement('img')
+  ptero.src = 'graphics/Dinosaurs/pterodactyl.png'
+  ptero.width = '200'
+  ptero.height = '200'
+  ptero.setAttribute('id', 'ptero')
+  dino2.appendChild(ptero)
+
+  const dino3 = document.createElement('div')
+  dino3.classList.add('dino')
+  dinoFigures.appendChild(dino3)
+  const giganto = document.createElement('img')
+  giganto.src = 'graphics/Dinosaurs/gigantosaurus.png'
+  giganto.width = '200'
+  giganto.height = '200'
+  giganto.setAttribute('id', 'giganto')
+  dino3.appendChild(giganto)
+
+  // ? Set up Herbivores
+
+  const tricera = document.createElement('img')
+  tricera.src = 'graphics/Dinosaurs/triceratops.png'
+  tricera.width = '200'
+  tricera.height = '200'
+  tricera.setAttribute('id', 'tricera')
+
+  const stego = document.createElement('img')
+  stego.src = 'graphics/Dinosaurs/stegosaurus.png'
+  stego.width = '200'
+  stego.height = '200'
+  stego.setAttribute('id', 'stego')
+
+  const bronto = document.createElement('img')
+  bronto.src = 'graphics/Dinosaurs/brontosaurus.png'
+  bronto.width = '200'
+  bronto.height = '200'
+  bronto.setAttribute('id', 'bronto')
+
+  // ? Set up columns
+
+  const activeCarnivoreName = document.createElement('h2')
+  carnivoreDino.appendChild(activeCarnivoreName)
+
+  const activeHerbivoreName = document.createElement('h2')
+  herbivoreDino.appendChild(activeHerbivoreName)
+
+
+
+  // ! Click to choose carnivore and set up herbivore page
+
+  trex.addEventListener('click', () => {
+    audio.src = 'sounds/t-rex-title.wav'
+    audio.play()
+    carnivore = 'T-Rex'
+    const activeCarnivore = document.createElement('img')
+    activeCarnivore.src = 'graphics/Dinosaurs/trex.png'
+    activeCarnivore.width = '200'
+    activeCarnivore.height = '200'
+    carnivoreDino.appendChild(activeCarnivore)
+
+    activeCarnivoreName.innerHTML = 'T-Rex'
+
+    trex.remove()
+    ptero.remove()
+    giganto.remove()
+
+    leafPicture.appendChild(herbivoreGo)
+    herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
+    chooseDinoHeader.innerHTML = 'Player 2 - Choose your dino!'
+
+    dino1.appendChild(tricera)
+    dino2.appendChild(stego)
+    dino3.appendChild(bronto)
+
+    // ? Creates triceratops
+
+    tricera.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Triceratops'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/triceratops.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Triceratops'
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+      
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+    })
+
+    // ? Creates stegosaurus
+
+    stego.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Stegosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/stegosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Stegosaurus'
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+
+    })
+
+    // ? Creates brontosaurus
+
+    bronto.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Brontosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/brontosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Brontosaurus'
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+
+    })
+
+  })
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ! Inserts reset button
+
+const resetBoard = document.createElement('button')
+resetBoard.classList.add('reset')
+resetButton.appendChild(resetBoard)
+resetBoard.innerHTML = 'Reset Board'
 
 
 
@@ -257,9 +511,17 @@ for (let index = 0; index < width ** 2; index++) {
 
 
 
+
+
+
     // ! Click event listener for placing markers - CARNIVORE
 
     cell.addEventListener('click', () => {
+
+      //audio.src = 'sounds/t-rex-title.wav'
+      //audio.play()
+
+
 
 
       if (currentPlayer === 'herbivore') {
@@ -565,10 +827,12 @@ for (let index = 0; index < width ** 2; index++) {
 }
 
 
+
+
 const smallBoards = Array.from(document.querySelectorAll('.small-board'))
 const popUp = document.querySelector('.pop-up')
 const cells2 = Array.from(document.querySelectorAll('.cell'))
-
+const reset = document.querySelector('.reset')
 
 
 
@@ -935,13 +1199,13 @@ function checkRoundWin() {
 
 function playerWins() {
   //mainBoard.setAttribute('id', 'disabled') // not working
-  
+
   if (carnivoreWinsRound === true) {
     carnivorePoints++
   } else if (herbivoreWinsRound === true) {
     herbivorePoints++
   }
-  
+
   const popUp = document.createElement('div')
   popUp.classList.add('pop-up')
   document.body.appendChild(popUp)
@@ -950,7 +1214,7 @@ function playerWins() {
   if (carnivoreWinsRound === true && carnivorePoints < 3) {
     round++
     currentPlayer = 'herbivore'
-    popUp.innerHTML = 'Carnivore wins!'
+    popUp.innerHTML = `${carnivore} wins!`
     const egg = document.createElement('img')
     egg.src = 'graphics/Dinosaurs/Egg1.png'
     egg.width = '100'
@@ -963,7 +1227,7 @@ function playerWins() {
     addEgg()
   } else if (carnivorePoints === 3) {
     addEgg()
-    popUp.innerHTML = 'Carnivore wins!'
+    popUp.innerHTML = `${carnivore} wins!`
     const nest = document.createElement('img')
     nest.src = 'graphics/Dinosaurs/eggs.png'
     nest.width = '200'
@@ -983,7 +1247,7 @@ function playerWins() {
   if (herbivoreWinsRound === true && herbivorePoints < 3) {
     round++
     currentPlayer = 'carnivore'
-    popUp.innerHTML = 'Herbivore wins!'
+    popUp.innerHTML = `${herbivore} wins!`
     const egg = document.createElement('img')
     egg.src = 'graphics/Dinosaurs/Egg1.png'
     egg.width = '100'
@@ -996,7 +1260,7 @@ function playerWins() {
     addEgg()
   } else if (herbivorePoints === 3) {
     addEgg()
-    popUp.innerHTML = 'Herbivore wins!'
+    popUp.innerHTML = `${herbivore} wins!`
     const nest = document.createElement('img')
     nest.src = 'graphics/Dinosaurs/eggs.png'
     nest.width = '200'
@@ -1096,7 +1360,7 @@ function addEgg() {
     cEgg1.src = 'graphics/Dinosaurs/Egg1.png'
     cEgg1.width = '80'
     cEggBox1.appendChild(cEgg1)
-  } else if (herbivoreWinsRound === true && carnivorePoints === 1) {
+  } else if (herbivoreWinsRound === true && herbivorePoints === 1) {
     const hEggBox1 = document.getElementById('h-egg-1')
     const hEgg1 = document.createElement('img')
     hEgg1.src = 'graphics/Dinosaurs/Egg1.png'
@@ -1109,7 +1373,7 @@ function addEgg() {
     cEgg2.src = 'graphics/Dinosaurs/Egg1.png'
     cEgg2.width = '80'
     cEggBox2.appendChild(cEgg2)
-  } else if (herbivoreWinsRound === true && carnivorePoints === 2) {
+  } else if (herbivoreWinsRound === true && herbivorePoints === 2) {
     const hEggBox2 = document.getElementById('h-egg-2')
     const hEgg2 = document.createElement('img')
     hEgg2.src = 'graphics/Dinosaurs/Egg1.png'
@@ -1122,7 +1386,7 @@ function addEgg() {
     cEgg3.src = 'graphics/Dinosaurs/Egg1.png'
     cEgg3.width = '80'
     cEggBox3.appendChild(cEgg3)
-  } else if (herbivoreWinsRound === true && carnivorePoints === 3) {
+  } else if (herbivoreWinsRound === true && herbivorePoints === 3) {
     const hEggBox3 = document.getElementById('h-egg-3')
     const hEgg3 = document.createElement('img')
     hEgg3.src = 'graphics/Dinosaurs/Egg1.png'
@@ -1134,7 +1398,7 @@ function addEgg() {
 
 // ! Reset button
 
-reset.addEventListener('click', () => {
+resetBoard.addEventListener('click', () => {
   boneMarkers.length = 0
   leafMarkers.length = 0
   carnivoreWins.length = 0
@@ -1167,7 +1431,6 @@ reset.addEventListener('click', () => {
   herbivoreWinsRound = false
   roundIsTied = false
 
-  currentPlayer = 'carnivore'
 
   let stickerRemove = document.querySelectorAll('.badge')
   stickerRemove.forEach(sticker => {
@@ -1191,6 +1454,9 @@ reset.addEventListener('click', () => {
 
   let removePopup = document.querySelector('.pop-up')
   removePopup.remove()
+
+  const hEgg1 = document.querySelector('img')
+  hEgg1.remove()
 
 })
 
