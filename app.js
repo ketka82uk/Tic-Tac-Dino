@@ -8,6 +8,7 @@ const carnivoreDino = document.querySelector('.carnivore-dino-left')
 const herbivoreDino = document.querySelector('.herbivore-dino')
 const leafPicture = document.querySelector('.leaf-picture')
 
+
 // ? Sets width of grid/boards/cells
 const width = 3
 const cells = []
@@ -254,11 +255,13 @@ startButton.addEventListener('click', () => {
   const chooseDinoHeader = document.createElement('h1')
   chooseDinoHeaderBox.appendChild(chooseDinoHeader)
   chooseDinoHeader.classList.add('animate__animated', 'animate__heartBeat')
-  chooseDinoHeader.innerHTML = 'Player 1 - Choose your dino!'
+  chooseDinoHeader.innerHTML = 'Meat-eater! Choose your dino!'
 
   const dinoFigures = document.createElement('div')
   dinoFigures.classList.add('dino-figures')
   chooseDinoBox.appendChild(dinoFigures)
+
+  const linebreak = document.createElement('br')
 
   // ? Sets up Carnivores
 
@@ -322,19 +325,19 @@ startButton.addEventListener('click', () => {
 
 
 
-  // ! Click to choose carnivore and set up herbivore page
+  // ! Click to choose carnivore and set up herbivore page - PTERODACTYL
 
-  trex.addEventListener('click', () => {
+  ptero.addEventListener('click', () => {
     audio.src = 'sounds/t-rex-title.wav'
     audio.play()
-    carnivore = 'T-Rex'
+    carnivore = 'Pterodactyl'
     const activeCarnivore = document.createElement('img')
-    activeCarnivore.src = 'graphics/Dinosaurs/trex.png'
+    activeCarnivore.src = 'graphics/Dinosaurs/pterodactyl.png'
     activeCarnivore.width = '200'
     activeCarnivore.height = '200'
     carnivoreDino.appendChild(activeCarnivore)
 
-    activeCarnivoreName.innerHTML = 'T-Rex'
+    activeCarnivoreName.innerHTML = 'Pterodactyl'
 
     trex.remove()
     ptero.remove()
@@ -343,7 +346,7 @@ startButton.addEventListener('click', () => {
     leafPicture.appendChild(herbivoreGo)
     herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
 
-    chooseDinoHeader.innerHTML = 'Player 2 - Choose your dino!'
+    chooseDinoHeader.innerHTML = 'Plant-eater! Choose your dino!'
 
     dino1.appendChild(tricera)
     dino2.appendChild(stego)
@@ -362,6 +365,9 @@ startButton.addEventListener('click', () => {
       herbivoreDino.appendChild(activeHerbivore)
 
       activeHerbivoreName.innerHTML = 'Triceratops'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
 
       centerColumn.classList.remove('hidden-board')
       centerColumn.classList.add('center-column')
@@ -394,6 +400,12 @@ startButton.addEventListener('click', () => {
 
       activeHerbivoreName.innerHTML = 'Stegosaurus'
 
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
       tricera.remove()
       stego.remove()
       bronto.remove()
@@ -423,6 +435,12 @@ startButton.addEventListener('click', () => {
 
       activeHerbivoreName.innerHTML = 'Brontosaurus'
 
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
       tricera.remove()
       stego.remove()
       bronto.remove()
@@ -440,8 +458,271 @@ startButton.addEventListener('click', () => {
 
   })
 
+  // ! Click to choose carnivore and set up herbivore page - TREX
+
+  trex.addEventListener('click', () => {
+    audio.src = 'sounds/t-rex-title.wav'
+    audio.play()
+    carnivore = 'T-Rex'
+    const activeCarnivore = document.createElement('img')
+    activeCarnivore.src = 'graphics/Dinosaurs/trex.png'
+    activeCarnivore.width = '200'
+    activeCarnivore.height = '200'
+    carnivoreDino.appendChild(activeCarnivore)
+
+    activeCarnivoreName.innerHTML = 'T-Rex'
+
+    trex.remove()
+    ptero.remove()
+    giganto.remove()
+
+    leafPicture.appendChild(herbivoreGo)
+    herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
+    chooseDinoHeader.innerHTML = 'Plant-eater! Choose your dino!'
+
+    dino1.appendChild(tricera)
+    dino2.appendChild(stego)
+    dino3.appendChild(bronto)
+
+    // ? Creates triceratops
+
+    tricera.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Triceratops'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/triceratops.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Triceratops'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+      
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+    })
+
+    // ? Creates stegosaurus
+
+    stego.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Stegosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/stegosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Stegosaurus'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
 
 
+    })
+
+    // ? Creates brontosaurus
+
+    bronto.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Brontosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/brontosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Brontosaurus'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+
+    })
+
+  })
+  
+  // ! Click to choose carnivore and set up herbivore page - GIGANTOSAURUS
+
+  giganto.addEventListener('click', () => {
+    audio.src = 'sounds/t-rex-title.wav'
+    audio.play()
+    carnivore = 'Gigantosaurus'
+    const activeCarnivore = document.createElement('img')
+    activeCarnivore.src = 'graphics/Dinosaurs/gigantosaurus.png'
+    activeCarnivore.width = '200'
+    activeCarnivore.height = '200'
+    carnivoreDino.appendChild(activeCarnivore)
+
+    activeCarnivoreName.innerHTML = 'Gigantosaurus'
+
+    trex.remove()
+    ptero.remove()
+    giganto.remove()
+
+    leafPicture.appendChild(herbivoreGo)
+    herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+
+    chooseDinoHeader.innerHTML = 'Plant-eater! Choose your dino!'
+
+    dino1.appendChild(tricera)
+    dino2.appendChild(stego)
+    dino3.appendChild(bronto)
+
+    // ? Creates triceratops
+
+    tricera.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Triceratops'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/triceratops.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Triceratops'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+      
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+    })
+
+    // ? Creates stegosaurus
+
+    stego.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Stegosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/stegosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Stegosaurus'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+
+    })
+
+    // ? Creates brontosaurus
+
+    bronto.addEventListener('click', () => {
+      audio.src = 'sounds/t-rex-title.wav'
+      audio.play()
+      herbivore = 'Brontosaurus'
+      const activeHerbivore = document.createElement('img')
+      activeHerbivore.src = 'graphics/Dinosaurs/brontosaurus.png'
+      activeHerbivore.width = '200'
+      activeHerbivore.height = '200'
+      herbivoreDino.appendChild(activeHerbivore)
+
+      activeHerbivoreName.innerHTML = 'Brontosaurus'
+
+      carnivoreDino.classList.remove('carnivore-dino-left')
+      carnivoreDino.classList.add('carnivore-dino')
+
+      centerColumn.classList.remove('hidden-board')
+      centerColumn.classList.add('center-column')
+
+      tricera.remove()
+      stego.remove()
+      bronto.remove()
+
+      dino1.remove()
+      dino2.remove()
+      dino3.remove()
+      dinoFigures.remove()
+      chooseDinoHeader.remove()
+      chooseDinoHeaderBox.remove()
+      chooseDinoBox.remove()
+
+
+    })
+
+  })
 
 
 
@@ -518,9 +799,6 @@ for (let index = 0; index < width ** 2; index++) {
 
     cell.addEventListener('click', () => {
 
-      //audio.src = 'sounds/t-rex-title.wav'
-      //audio.play()
-
 
 
 
@@ -528,10 +806,14 @@ for (let index = 0; index < width ** 2; index++) {
         herbivoreGo.remove()
         bonePicture.appendChild(carnivoreGo)
         carnivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+        audio.src = 'sounds/leaf.mp3'
+        audio.play()
       } else if (currentPlayer === 'carnivore') {
         carnivoreGo.remove()
         leafPicture.appendChild(herbivoreGo)
         herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
+        audio.src = 'sounds/bone.mp3'
+        audio.play()
       }
 
 
