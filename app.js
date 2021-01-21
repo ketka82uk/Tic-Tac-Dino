@@ -254,14 +254,14 @@ for (let index = 0; index < width ** 2; index++) {
     //console.log(cell.id)
     cellIds.push(cell.id)
 
-    
+
 
 
     // ! Click event listener for placing markers - CARNIVORE
 
     cell.addEventListener('click', () => {
 
-    
+
       if (currentPlayer === 'herbivore') {
         herbivoreGo.remove()
         bonePicture.appendChild(carnivoreGo)
@@ -272,8 +272,8 @@ for (let index = 0; index < width ** 2; index++) {
         herbivoreGo.classList.add('animate__animated', 'animate__heartBeat')
       }
 
-    
-      
+
+
       // if (carnivoreWinsRound === true || herbivoreWinsRound === true || roundIsTied === true) {
       //   smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
       //   smallBoards.forEach(smallBoard => smallBoard.classList.add('disabled')) // disables all boards
@@ -322,7 +322,7 @@ for (let index = 0; index < width ** 2; index++) {
 
         currentPlayer = 'herbivore' // changes player to herbivore
 
-    
+
         smallBoards.forEach(smallBoard => smallBoard.classList.remove('active')) // removes active class from all except active boards
         smallBoards.forEach(smallBoard => smallBoard.classList.add('disabled')) // disables all boards
 
@@ -935,13 +935,21 @@ function checkRoundWin() {
 
 function playerWins() {
   //mainBoard.setAttribute('id', 'disabled') // not working
+  
+  if (carnivoreWinsRound === true) {
+    carnivorePoints++
+  } else if (herbivoreWinsRound === true) {
+    herbivorePoints++
+  }
+  
   const popUp = document.createElement('div')
   popUp.classList.add('pop-up')
   document.body.appendChild(popUp)
   popUp.setAttribute('id', 'pop-up')
-  if (carnivoreWinsRound === true) {
+
+  if (carnivoreWinsRound === true && carnivorePoints < 3) {
     round++
-    carnivorePoints++
+    currentPlayer = 'herbivore'
     popUp.innerHTML = 'Carnivore wins!'
     const egg = document.createElement('img')
     egg.src = 'graphics/Dinosaurs/Egg1.png'
@@ -949,12 +957,32 @@ function playerWins() {
     popUp.appendChild(egg)
     const playAgain = document.createElement('button')
     playAgain.classList.add('button')
+    playAgain.setAttribute('id', 'play-again')
     popUp.appendChild(playAgain)
     playAgain.innerHTML = `Play round ${round}`
     addEgg()
-  } else if (herbivoreWinsRound === true) {
+  } else if (carnivorePoints === 3) {
+    addEgg()
+    popUp.innerHTML = 'Carnivore wins!'
+    const nest = document.createElement('img')
+    nest.src = 'graphics/Dinosaurs/eggs.png'
+    nest.width = '200'
+    popUp.appendChild(nest)
+    const startAgain = document.createElement('button')
+    startAgain.classList.add('button')
+    startAgain.setAttribute('id', 'start-again')
+    popUp.appendChild(startAgain)
+    startAgain.innerHTML = 'Start new game'
+    // ? Start again button
+    const startAgainButton = document.getElementById('start-again')
+    startAgainButton.addEventListener('click', () => {
+      location.reload()
+    })
+  }
+
+  if (herbivoreWinsRound === true && herbivorePoints < 3) {
     round++
-    herbivorePoints++
+    currentPlayer = 'carnivore'
     popUp.innerHTML = 'Herbivore wins!'
     const egg = document.createElement('img')
     egg.src = 'graphics/Dinosaurs/Egg1.png'
@@ -962,34 +990,144 @@ function playerWins() {
     popUp.appendChild(egg)
     const playAgain = document.createElement('button')
     playAgain.classList.add('button')
+    playAgain.setAttribute('id', 'play-again')
     popUp.appendChild(playAgain)
     playAgain.innerHTML = `Play round ${round}`
     addEgg()
-  } else if (roundIsTied === true) {
+  } else if (herbivorePoints === 3) {
+    addEgg()
+    popUp.innerHTML = 'Herbivore wins!'
+    const nest = document.createElement('img')
+    nest.src = 'graphics/Dinosaurs/eggs.png'
+    nest.width = '200'
+    popUp.appendChild(nest)
+    const startAgain = document.createElement('button')
+    startAgain.classList.add('button')
+    startAgain.setAttribute('id', 'start-again')
+    popUp.appendChild(startAgain)
+    startAgain.innerHTML = 'Start new game'
+    // ? Start again button
+    const startAgainButton = document.getElementById('start-again')
+    startAgainButton.addEventListener('click', () => {
+      location.reload()
+    })
+  }
+
+  if (roundIsTied === true) {
     popUp.innerHTML = "It's a tie!"
     const playAgain = document.createElement('button')
     playAgain.classList.add('button')
+    playAgain.setAttribute('id', 'play-again')
     popUp.appendChild(playAgain)
     playAgain.innerHTML = `Play round ${round}`
   }
+
+
+  // ? Play next round button
+
+  const playAgain = document.getElementById('play-again')
+  playAgain.addEventListener('click', () => {
+    boneMarkers.length = 0
+    leafMarkers.length = 0
+    carnivoreWins.length = 0
+    herbivoreWins.length = 0
+
+    boards.A.won = false
+    boards.B.won = false
+    boards.C.won = false
+    boards.D.won = false
+    boards.E.won = false
+    boards.F.won = false
+    boards.G.won = false
+    boards.H.won = false
+    boards.I.won = false
+    boards.A.drawn = false
+    boards.B.drawn = false
+    boards.C.drawn = false
+    boards.D.drawn = false
+    boards.E.drawn = false
+    boards.F.drawn = false
+    boards.G.drawn = false
+    boards.H.drawn = false
+    boards.I.drawn = false
+
+    carnivoreWinsRound = false
+    herbivoreWinsRound = false
+    roundIsTied = false
+
+    let stickerRemove = document.querySelectorAll('.badge')
+    stickerRemove.forEach(sticker => {
+      sticker.classList.remove('bone-sticker')
+      sticker.classList.remove('leaf-sticker')
+    })
+
+    cells2.forEach(cell => {
+      cell.classList.remove('bone')
+      cell.classList.remove('leaf')
+    })
+
+    smallBoards.forEach(smallBoard => {
+      smallBoard.classList.remove('disabled')
+      smallBoard.classList.remove('carnivore')
+      smallBoard.classList.remove('herbivore')
+      smallBoard.classList.remove('tie')
+      smallBoard.classList.add('active')
+
+    })
+
+    let removePopup = document.querySelector('.pop-up')
+    removePopup.remove()
+
+
+    console.log(round)
+    console.log(carnivorePoints)
+    console.log(herbivorePoints)
+
+  })
   console.log(round)
   console.log(carnivorePoints)
   console.log(herbivorePoints)
 }
 
 function addEgg() {
-  if (carnivorePoints === 1) {
-    const cEgg1 = document.getElementById('c-egg-1')
-    const egg1 = document.createElement('img')
-    egg1.src = 'graphics/Dinosaurs/Egg1.png'
-    egg1.width = '100%'
-    cEgg1.appendChild(egg1)
-  } else if (herbivorePoints === 1) {
-    const hEgg1 = document.getElementById('h-egg-1')
-    const egg1 = document.createElement('img')
-    egg1.src = 'graphics/Dinosaurs/Egg1.png'
-    egg1.width = '100%'
-    hEgg1.appendChild(egg1)
+  if (carnivoreWinsRound === true && carnivorePoints === 1) {
+    const cEggBox1 = document.getElementById('c-egg-1')
+    const cEgg1 = document.createElement('img')
+    cEgg1.src = 'graphics/Dinosaurs/Egg1.png'
+    cEgg1.width = '80'
+    cEggBox1.appendChild(cEgg1)
+  } else if (herbivoreWinsRound === true && carnivorePoints === 1) {
+    const hEggBox1 = document.getElementById('h-egg-1')
+    const hEgg1 = document.createElement('img')
+    hEgg1.src = 'graphics/Dinosaurs/Egg1.png'
+    hEgg1.width = '80'
+    hEggBox1.appendChild(hEgg1)
+  }
+  if (carnivoreWinsRound === true && carnivorePoints === 2) {
+    const cEggBox2 = document.getElementById('c-egg-2')
+    const cEgg2 = document.createElement('img')
+    cEgg2.src = 'graphics/Dinosaurs/Egg1.png'
+    cEgg2.width = '80'
+    cEggBox2.appendChild(cEgg2)
+  } else if (herbivoreWinsRound === true && carnivorePoints === 2) {
+    const hEggBox2 = document.getElementById('h-egg-2')
+    const hEgg2 = document.createElement('img')
+    hEgg2.src = 'graphics/Dinosaurs/Egg1.png'
+    hEgg2.width = '80'
+    hEggBox2.appendChild(hEgg2)
+  }
+  if (carnivoreWinsRound === true && carnivorePoints === 3) {
+    const cEggBox3 = document.getElementById('c-egg-3')
+    const cEgg3 = document.createElement('img')
+    cEgg3.src = 'graphics/Dinosaurs/Egg1.png'
+    cEgg3.width = '80'
+    cEggBox3.appendChild(cEgg3)
+  } else if (herbivoreWinsRound === true && carnivorePoints === 3) {
+    const hEggBox3 = document.getElementById('h-egg-3')
+    const hEgg3 = document.createElement('img')
+    hEgg3.src = 'graphics/Dinosaurs/Egg1.png'
+    hEgg3.width = '80'
+    hEggBox3.appendChild(hEgg3)
   }
 
 }
@@ -1001,6 +1139,10 @@ reset.addEventListener('click', () => {
   leafMarkers.length = 0
   carnivoreWins.length = 0
   herbivoreWins.length = 0
+
+  carnivorePoints = 0
+  herbivorePoints = 0
+  round = 1
 
   boards.A.won = false
   boards.B.won = false
@@ -1027,14 +1169,6 @@ reset.addEventListener('click', () => {
 
   currentPlayer = 'carnivore'
 
-  //console.log(boards)
-  //console.log(carnivoreWins)
-  //console.log(herbivoreWins)
-  //console.log(carnivoreWinsRound)
-  //console.log(herbivoreWinsRound)
-  //console.log(roundIsTied)
-  //console.log(currentPlayer)
-
   let stickerRemove = document.querySelectorAll('.badge')
   stickerRemove.forEach(sticker => {
     sticker.classList.remove('bone-sticker')
@@ -1055,21 +1189,15 @@ reset.addEventListener('click', () => {
 
   })
 
-
   let removePopup = document.querySelector('.pop-up')
   removePopup.remove()
 
-
-  // smallBoards.forEach(smallBoard => {
-  //   let badge = document.querySelectorAll('.badge')
-  //   smallBoard.removeChild(badge)
-  // })
-
-  // //smallBoards.forEach(smallBoard => smallBoard.removeChild(badgeReset))
-
-
-
 })
+
+
+
+
+
 
 
 console.log(round)
