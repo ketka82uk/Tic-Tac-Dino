@@ -412,14 +412,16 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-content: center;
   font-family: StoneHinge;
   font-size: 50px;
   color: rgb(90, 82, 74);
   position: absolute;
+  width: 600px;
+  text-align: center;
 }
 
 #c-egg-1, #c-egg-2, #c-egg-3, #h-egg-1, #h-egg-2, #h-egg-3 {
-  height: 100%;
   flex: 1;
   padding: 5px;
 }

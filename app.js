@@ -1540,7 +1540,8 @@ function playerWins() {
     const dancingDino = document.getElementById(`${carnivore.toLowerCase()}`)
     console.log(dancingDino)
     dancingDino.classList.add('dancing-dino')
-    popUp.innerHTML = `${carnivore} wins! You're ROAR-some!`
+    popUp.innerHTML = `${carnivore}, you're ROAR-some!`
+    popUp.width = '600'
     const nest = document.createElement('img')
     nest.src = 'graphics/Dinosaurs/Eggs.png'
     nest.width = '200'
@@ -1579,7 +1580,8 @@ function playerWins() {
     addEgg()
     const dancingDino = document.getElementById(`${herbivore.toLowerCase()}`)
     dancingDino.classList.add('dancing-dino')
-    popUp.innerHTML = `${herbivore} wins! You're ROAR-some!`
+    popUp.innerHTML = `${herbivore}, you're ROAR-some!`
+    popUp.width = '600'
     const nest = document.createElement('img')
     nest.src = 'graphics/Dinosaurs/Eggs.png'
     nest.width = '200'
