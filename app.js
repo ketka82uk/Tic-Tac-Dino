@@ -8,6 +8,7 @@ const carnivoreDino = document.querySelector('.carnivore-dino-left')
 const herbivoreDino = document.querySelector('.herbivore-dino')
 const leafPicture = document.querySelector('.leaf-picture')
 
+console.log('hello')
 
 // ? Sets width of grid/boards/cells
 const width = 3
