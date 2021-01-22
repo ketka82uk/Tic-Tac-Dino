@@ -1542,7 +1542,7 @@ function playerWins() {
     dancingDino.classList.add('dancing-dino')
     popUp.innerHTML = `${carnivore} wins! You're ROAR-some!`
     const nest = document.createElement('img')
-    nest.src = 'graphics/Dinosaurs/eggs.png'
+    nest.src = 'graphics/Dinosaurs/Eggs.png'
     nest.width = '200'
     popUp.appendChild(nest)
     const startAgain = document.createElement('button')
@@ -1581,7 +1581,7 @@ function playerWins() {
     dancingDino.classList.add('dancing-dino')
     popUp.innerHTML = `${herbivore} wins! You're ROAR-some!`
     const nest = document.createElement('img')
-    nest.src = 'graphics/Dinosaurs/eggs.png'
+    nest.src = 'graphics/Dinosaurs/Eggs.png'
     nest.width = '200'
     popUp.appendChild(nest)
     const startAgain = document.createElement('button')
