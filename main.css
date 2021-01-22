@@ -393,6 +393,10 @@ h1 {
   margin-bottom: 15px;
 }
 
+.dancing-dino {
+  animation: spin 4s linear infinite
+}
+
 #disabled {
   filter: blur(2)
 }
@@ -424,6 +428,11 @@ h1 {
     transform: scale(2)
 }
 
+
+@keyframes spin {
+  100%
+  {transform: rotate(360deg)}
+}
 
 
 /*
