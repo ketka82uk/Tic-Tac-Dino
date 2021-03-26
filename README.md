@@ -3,7 +3,7 @@
 ### General Assembley Software Engineering Immersive Course
 
 # Tic-Tac-Dino!
-Play Tic-Tac-Dino [Here](https://ketka82uk.github.io/Tic-Tac-Dino/)
+Play Tic-Tac-Dino! [Here](https://ketka82uk.github.io/Tic-Tac-Dino/)
 
 <img src="Tic-Tac-Dino-high.gif"/>
 
