@@ -125,8 +125,6 @@ Along with checking for win conditions, the event listener also checks if the sm
 
 ~~~javascript
 function checkForTie(activeBoard) {
-  //console.log(activeBoard)
-  //console.log(boards[activeBoard].won)
   let currentBoard = ''
   for (let i = 0; i < smallBoards.length; i++) {
     if (activeBoard === smallBoards[i].id) {
@@ -145,7 +143,6 @@ function checkForTie(activeBoard) {
     currentBoard.classList.add('tie')
     boards[activeBoard].drawn = true
   }
-  //console.log(boards[activeBoard].drawn)  
 }
 ~~~
 
