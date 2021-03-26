@@ -1,35 +1,35 @@
 <img src="https://github.com/ketka82uk/Tic-Tac-Dino/blob/master/unnamed.png?raw=true" alt="drawing" width="150"/>
 
-###General Assembley Software Engineering Immersive Course
+### General Assembley Software Engineering Immersive Course
 
-#Tic-Tac-Dino!
+# Tic-Tac-Dino!
 Play Tic-Tac-Dino [Here](https://https://ketka82uk.github.io/Tic-Tac-Dino/)
 
 <img src="Tic-Tac-Dino-high.gif"/>
 
-##In a land before time...
+## In a land before time...
 
-###The brief
+### The brief
 
 **Them:** You have 1 week to go away on your own and create a 2D grid-based browser game using Javascript, HTML and CSS. Go!
 
 **Me:** ...
 
-###Ultimate Tic-Tac-Toe (with added dinosaurs)
+### Ultimate Tic-Tac-Toe (with added dinosaurs)
 To say I was a little nervous going into this one would be the understatement of the century, but I did what I always do in times of indecision and crisis - let my six-year-old decide what to do next. She wanted Ultimate Tic-Tac-Toe with dinosaurs, so that's what she got.
 
 If you're not familiar with the rules of Ultimate Tic-Tac-Toe then you can read them [here](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe). Sadly, it's a little more complicated than regular tic-tac-toe as I was about to find out...
 
-###Technologies Used
+### Technologies Used
 * Javascript
 * HTML
 * CSS
 
-##The logic
+## The logic
 
 <img src="Tic-Tac-Dino-high copy.gif"/>
 
-###Creating the grid
+### Creating the grid
 First the easy part... creating a main board, which was made up of a 3x3 grid containing 9 elements called smallBoard. This was created using a simple for loop. Within each smallBoard I then created a further 3x3 grid composed of 9 cells using another for loop. The board was now set!
 
 ~~~javascript
@@ -55,7 +55,7 @@ for (let index = 0; index < width ** 2; index++) {
     cellIds.push(cell.id)
 ~~~
 
-###Leaves and bones
+### Leaves and bones
 I decided to forgoe the usual Xs and Os, in favour of bones and leaves, befitting my herbivore vs carnivore theme. Once the board was set up, the next stage was to populate it with those bones and leaves as the players set down their markers. I did this by using classList to add classes to cells and creating a click event listener that checks for the following each time a player clicks on a cell:
 
 * is the player a herbivore or a carnivore?
@@ -94,7 +94,7 @@ if (currentPlayer === 'herbivore') {
       }
 ~~~
 
-###Boards, boards, boards
+### Boards, boards, boards
 So how do you win a game? Well, that was the tough part. Firstly, as per the rules of the game, once a marker has been placed, play then moves to the smallBoard that corresponds to the position of the last clicked cell, as per the diagram below (courtesy of wikipedia):
 
 <img src="rules.png"/>
@@ -115,12 +115,12 @@ if (index === 0) {
         } else if ... etc etc etc for about 900 lines
 ~~~
 
-###Winning a board
+### Winning a board
 Ah, the win conditions... I hadn't quite grabbed the concept of DRY by this point, so most of the code is pretty WET (Wandering Elongated Trash), but again, it works. Each time a marker is placed, the code checks if a win condition has been met - i.e has the player placed three bones/leaves in a row? If a win condition is met then that smallBoard is taken out of play and a sticker div placed over it to show the winner.
 
 <img src="Screenshots/smallBoard-winner.png"/>
 
-###It's a draw!
+### It's a draw!
 Along with checking for win conditions, the event listener also checks if the smallBoard is tied. This was a surprisingly tough nut to crack, and basically adds up the number of empty cells in the smallBoard by placing them in a new array. If the length of the array is zero and no win condition has been met, then the board is drawn.
 
 ~~~javascript
@@ -149,7 +149,7 @@ function checkForTie(activeBoard) {
 }
 ~~~
 
-###Winning the game
+### Winning the game
 To win a game, a player needs to win three smallBoards in a row, just like in regular Tic-Tac-Toe. This involved a whole new set of win conditions that ran when a smallBoard was won. Each time a smallBoard was won, the code ran a function to see if the player had met the ultimate win condition, by checking for an overall round win:
 
 ~~~javascript
@@ -165,21 +165,21 @@ function checkRoundWin() {
 }
 ~~~
 
-###Egg collecting
+### Egg collecting
 Not content with just ending the game there, I also implemented a round system involving the winning of eggs. Win the round and a div pop-up appears to let you know you've won an egg. The egg then appears underneath your dinosaur. Get to three eggs and you're crowned the ultimate Tic-Tac-Dino winner!
 
 <img src="Screenshots/egg-win.png"/>
 
 
-##The user experience
+## The user experience
 
-###Interactivity
+### Interactivity
 Because I was making this game for my daughter, I wanted to make it as fun as possible, using animations and sounds to make the experience feel immersive. From the sound effects each time a marker is placed, to the dinosaur roar every time a round is won, right through to the little dance your dino does after you win three rounds! I also wanted to make it feel more interactive by giving the player the opportunity to choose their dinosaur, providing an option of three herbivores and three carnivores for each player.
 
 <img src="Screenshots/herbivore-choose.png"/>
 
 
-###Look and Feel
+### Look and Feel
 The look and feel was by far the biggest part of this project for me. I knew my coding skills were still in their early stages but I felt I could make up for that with some cute design ideas that made the app great to look at. I used a number of different resources for the graphics and sounds (noted below). I also looked up a number of CSS techniques to achieve the border and font effects, using flexbox to align everything:
 
 ~~~javascript
@@ -203,9 +203,9 @@ The look and feel was by far the biggest part of this project for me. I knew my 
 }
 ~~~
 
-##Next time...
+## Next time...
 
-###Improvements
+### Improvements
 Overall I'm really pleased with the way this project turned out, but if I ever get the chance to improve it, there are a number of things I'd like to do:
 
 * First off, refactor the code and make much better use of fucntions and make better use of DRY and KISS principles. I was still a little unsure on how to use scope when I created this app, and there are a lot of improvements that can be made under the hood!
@@ -215,22 +215,19 @@ Overall I'm really pleased with the way this project turned out, but if I ever g
 * The game only really runs on Chrome and on a wide screen so making it Safari and mobile friendly would definitely be a plus!
 
 
-###Future additions
+### Future additions
 The obvious one here is a computer AI opponent! I'd love to add one of those one day! Along with player vs player online.
 
 Oh, and a rules page could be handy!
 
 
-###Bugs squished (and not-so-squished)
+### Bugs squished (and not-so-squished)
 Only one big bug with this one - after round one the function to check if a smallBoard is tied doesn't work properly. I'm pretty sure that this has something to do with the additonal div stickers that are added to the board to show when a smallBoard has been won or drawn and these divs are not being removed properly at the end of each round. Definitely something to fix soon!
 
-##Assets
+## Assets
 I used the following assets for this project:
 
 * Dinosaur images by [DigitalArtsi](https://www.etsy.com/uk/shop/DigitalArtsi?ref=simple-shop-header-name&listing_id=630380102) on [Etsy](https://www.etsy.com)
 * Sounds from [ZapSplat](https://www.zapsplat.com)
 * Background image from [pngtree](https://pngtree.com/)
 * Title font is StoneHinge from [myfonts.com](https://www.myfonts.com/)
-
-
-
