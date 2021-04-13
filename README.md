@@ -13,7 +13,7 @@ Play Tic-Tac-Dino! [Here](https://ketka82uk.github.io/Tic-Tac-Dino/)
 
 **Them:** You have 1 week to go away on your own and create a 2D grid-based browser game using Javascript, HTML and CSS. Go!
 
-**Me:** ...
+**Me:** (gulp)
 
 ### Ultimate Tic-Tac-Toe (with added dinosaurs)
 This was my first project on my GA course after only a few weeks of tuition, and to say I was a little nervous going into it would be the understatement of the year. But I did what I always do in times of indecision and crisis - let my six-year-old decide what to do next. She wanted Ultimate Tic-Tac-Toe with dinosaurs, so that's what she got.
