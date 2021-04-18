@@ -11,7 +11,7 @@ Play Tic-Tac-Dino! [Here](https://ketka82uk.github.io/Tic-Tac-Dino/)
 
 ### The brief
 
-**Them:** You have 1 week to go away on your own and create a 2D grid-based browser game using Javascript, HTML and CSS. Go!
+**Them:** You have 1 week to go away on your own and create a 2D grid-based browser game using JavaScript, HTML and CSS. Go!
 
 **Me:** (gulp)
 
@@ -21,7 +21,7 @@ This was my first project on my GA course after only a few weeks of tuition, and
 If you're not familiar with the rules of Ultimate Tic-Tac-Toe then you can read them [here](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe). Sadly, it's a little more complicated than regular tic-tac-toe as I was about to find out...
 
 ### Technologies Used
-* Javascript
+* JavaScript
 * HTML
 * CSS
 
@@ -116,7 +116,7 @@ if (index === 0) {
 ~~~
 
 ### Winning a board
-Ah, the win conditions... I hadn't quite grabbed the concept of DRY by this point, so most of the code is pretty WET (Wandering Elongated Trash), but again, it works. Each time a marker is placed, the code checks if a win condition has been met - i.e has the player placed three bones/leaves in a row? If a win condition is met then that smallBoard is taken out of play and a sticker div placed over it to show the winner.
+Ah, the win conditions... I hadn't quite grabbed the concept of DRY by this point, so most of the code is pretty...um... wet, but again, it works. Each time a marker is placed, the code checks if a win condition has been met - i.e has the player placed three bones/leaves in a row? If a win condition is met then that smallBoard is taken out of play and a sticker div placed over it to show the winner.
 
 <img src="Screenshots/smallBoard-winner.png"/>
 
